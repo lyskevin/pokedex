@@ -45,14 +45,14 @@ exports.new = function (request, response) {
 // Handle view pokemon info
 // GET /api/pokemon/{name}
 exports.view = function(request, response) {
-  Pokemon.find({
+  Pokemon.findOne({
     name: request.params.name
   }, function (error, pokemon) {
     if (error) {
       response.send(error);
     } else {
       response.json({
-        message: 'Pokemon details loading...',
+        message: request.params.name + ' details',
         data: pokemon
       })
     }
@@ -62,7 +62,7 @@ exports.view = function(request, response) {
 // Handle update Pokemon info
 // PUT /api/pokemon/{name}
 exports.update = function (request, response) {
-  Pokemon.find({
+  Pokemon.findOne({
     name: request.params.name
   }, function (error, pokemon) {
     if (error) {
