@@ -1,5 +1,5 @@
 // Import Pokemon model
-Pokemon = require('./model.js');
+var Pokemon = require('./model');
 
 // Handle index actions (i.e. display retrieved list of pokemon)
 // GET /api/pokemon
