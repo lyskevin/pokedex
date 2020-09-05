@@ -25,10 +25,10 @@ var pokemonSchema = mongoose.Schema({
   }
 })
 
-// Export pokemon model
+// Export Pokemon model
 
-var pokemon = module.exports = mongoose.model('pokemon', pokemonSchema);
+var Pokemon = module.exports = mongoose.model('pokemon', pokemonSchema);
 
 module.exports.get = function (callback, limit) {
-  pokemon.find(callback).limit(limit);
+  Pokemon.find(callback).limit(limit);
 }
