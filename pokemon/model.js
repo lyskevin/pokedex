@@ -29,5 +29,5 @@ var pokemonSchema = mongoose.Schema({
 var Pokemon = module.exports = mongoose.model('pokemon', pokemonSchema);
 
 module.exports.get = function (callback, limit) {
-  Pokemon.find(callback).limit(limit);
+  Pokemon.find(callback).limit(limit).sort('pokedexNumber');
 }
