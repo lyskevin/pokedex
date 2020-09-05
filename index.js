@@ -40,7 +40,7 @@ if (db) {
 var port = process.env.PORT || 8080;
 
 // Send message for default URL
-app.get('/', (request, response) => response.send('Hello World with Express Nodemon'));
+app.get('/', (request, response) => response.send('Welcome to my Pokedex'));
 
 // Use API routes in the app
 app.use('/api', apiRoutes);
