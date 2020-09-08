@@ -9,7 +9,6 @@ chai.should();
 
 // Configure mock database
 var mongodb = require('mongo-mock');
-mongodb.max_delay = 0;
 var MongoClient = mongodb.MongoClient;
 var url = 'mongodb://localhost/pokedex';
 var docs = [
