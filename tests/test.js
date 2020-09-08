@@ -34,7 +34,7 @@ var docs = [
 
 MongoClient.connect(url).then(client => {
   var collection = client.collection('pokemon');
-  collection.insertMany(docs, function (err, result){
+  collection.insertMany(docs, function (err, result) {
     // Close connection
     client.close();
   });
@@ -44,7 +44,8 @@ describe('Pokemon', () => {
   describe('GET', () => {
 
     // Test to get all Pokemon
-    it("should get all Pokemon", (done) => {
+    it("should get all Pokemon", function(done) {
+      this.timeout(10000);
       chai.request(app)
         .get('/api/pokemon')
         .end((error, result) => {
@@ -55,7 +56,8 @@ describe('Pokemon', () => {
     });
 
     // Test to get a single Pokemon
-    it("should get Bulbasaur", (done) => {
+    it("should get Bulbasaur", function(done) {
+      this.timeout(10000);
       chai.request(app)
         .get('/api/pokemon/Bulbasaur')
         .end((error, result) => {
