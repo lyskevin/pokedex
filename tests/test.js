@@ -1,7 +1,7 @@
 // Import testing dependencies
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import app from '../index';
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var app = require('../index')
 
 // Configure chai (Use the "Should" style)
 chai.use(chaiHttp);
