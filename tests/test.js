@@ -7,6 +7,40 @@ var app = require('../index')
 chai.use(chaiHttp);
 chai.should();
 
+// Configure mock database
+var mongodb = require('mongo-mock');
+mongodb.max_delay = 0;
+var MongoClient = mongodb.MongoClient;
+var url = 'mongodb://localhost/pokedex';
+var docs = [
+  {
+    "name": "Bulbasaur",
+    "pokedexNumber": 1,
+    "primaryType": "Grass",
+    "secondaryType": "Poison"
+  },
+  {
+    "name": "Ivysaur",
+    "pokedexNumber": 2,
+    "primaryType": "Grass",
+    "secondaryType": "Poison"
+  },
+  {
+    "name": "Venusaur",
+    "pokedexNumber": 3,
+    "primaryType": "Grass",
+    "secondaryType": "Poison"
+  }
+];
+
+MongoClient.connect(url).then(client => {
+  var collection = client.collection('pokemon');
+  collection.insertMany(docs, function (err, result){
+    // Close connection
+    client.close();
+  });
+});
+
 describe('Pokemon', () => {
   describe('GET', () => {
 
