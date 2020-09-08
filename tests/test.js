@@ -45,7 +45,7 @@ describe('Pokemon', () => {
 
     // Test to get all Pokemon
     it("should get all Pokemon", function(done) {
-      this.timeout(10000);
+      this.timeout(120000);
       chai.request(app)
         .get('/api/pokemon')
         .end((error, result) => {
@@ -57,7 +57,7 @@ describe('Pokemon', () => {
 
     // Test to get a single Pokemon
     it("should get Bulbasaur", function(done) {
-      this.timeout(10000);
+      this.timeout(120000);
       chai.request(app)
         .get('/api/pokemon/Bulbasaur')
         .end((error, result) => {
