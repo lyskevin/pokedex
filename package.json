@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "pokedex",
   "version": "1.0.0",
   "description": "A Pokedex app that uses a simple RESTful API implementation",
