@@ -1,43 +1,74 @@
 // Import testing dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var app = require('../index')
+var app = require('../index');
+const { expect } = require('chai');
 
 // Configure chai (Use the "Should" style)
 chai.use(chaiHttp);
 chai.should();
 
+var blaziken = {
+  "name": "Blaziken",
+  "pokedexNumber": 257,
+  "primaryType": "Fire",
+  "secondaryType": "Fighting"
+}
+
+var mewtwo = {
+  "name": "Mewtwo",
+  "pokedexNumber": 150,
+  "primaryType": "Psychic"
+}
+
 describe('Pokemon', () => {
   describe('POST', () => {
-      // Test to add Blaziken
-      it("should add Blaziken", function(done) {
-        chai.request(app)
-          .post('/api/pokemon')
-          .set('content-type', 'application/json')
-          .send({
-            "name": "Blaziken",
-            "pokedexNumber": 257,
-            "primaryType": "Fire",
-            "secondaryType": "Fighting"
-          })
-          .end((error, result) => {
-            result.should.have.status(200);
-            result.body.message.should.equal('New Pokemon created!');
-            result.body.data.should.have.property('name');
-            result.body.data.should.have.property('pokedexNumber');
-            result.body.data.should.have.property('primaryType');
-            result.body.data.should.have.property('secondaryType');
-            result.body.data.name.should.equal('Blaziken');
-            result.body.data.pokedexNumber.should.equal(257);
-            result.body.data.primaryType.should.equal('Fire');
-            result.body.data.secondaryType.should.equal('Fighting');
-            done();
-          });
-      });
+    // Test to add Blaziken
+    it("should add Blaziken", function(done) {
+      chai.request(app)
+        .post('/api/pokemon')
+        .set('content-type', 'application/json')
+        .send(blaziken)
+        .end((error, result) => {
+          result.should.have.status(200);
+          result.body.message.should.equal('New Pokemon created!');
+          result.body.data.should.have.property('name');
+          result.body.data.should.have.property('pokedexNumber');
+          result.body.data.should.have.property('primaryType');
+          result.body.data.should.have.property('secondaryType');
+          result.body.data.name.should.equal(blaziken.name);
+          result.body.data.pokedexNumber.should.equal(blaziken.pokedexNumber);
+          result.body.data.primaryType.should.equal(blaziken.primaryType);
+          result.body.data.secondaryType.should.equal(blaziken.secondaryType);
+          done();
+        });
+    });
+
+    // Test to add Mewtwo (no secondary type)
+    it("should add Mewtwo", function(done) {
+      chai.request(app)
+        .post('/api/pokemon')
+        .set('content-type', 'application/json')
+        .send(mewtwo)
+        .end((error, result) => {
+          result.should.have.status(200);
+          result.body.message.should.equal('New Pokemon created!');
+          result.body.data.should.have.property('name');
+          result.body.data.should.have.property('pokedexNumber');
+          result.body.data.should.have.property('primaryType');
+          result.body.data.name.should.equal(mewtwo.name);
+          result.body.data.pokedexNumber.should.equal(mewtwo.pokedexNumber);
+          result.body.data.primaryType.should.equal(mewtwo.primaryType);
+          done();
+        });
+    });
   });
 
   describe('GET', () => {
     // Test to get all Pokemon
+    // Cannot test for the actual returned dictionary values here because MongoDB entries are created with unique IDs;
+    // the test assertion will always fail because there is no way of knowing the unique ID of each entry
+    // Storing the ID of each entry inside the GET tests is possible but that introduces side effects to the GET tests
     it("should get all Pokemon", function(done) {
       chai.request(app)
         .get('/api/pokemon')
@@ -105,6 +136,21 @@ describe('Pokemon', () => {
         .set('content-type', 'application/json')
         .send({
           "name": "Blaziken",
+        })
+        .end((error, result) => {
+          result.should.have.status(200);
+          result.body.message.should.equal('Pokemon deleted');
+          done();
+        });
+    });
+
+    // Test to delete Mewtwo
+    it("should delete Mewtwo", function(done) {
+      chai.request(app)
+        .delete('/api/pokemon/Mewtwo')
+        .set('content-type', 'application/json')
+        .send({
+          "name": "Mewtwo",
         })
         .end((error, result) => {
           result.should.have.status(200);
