@@ -3,7 +3,7 @@ node_js:
 - node
 services: mongodb
 deploy:
-  provider: lmabda
+  provider: lambda
   function_name: lambda test
   region: ap-southeast-1
   role: arn:aws:iam::0123456789012:role/lambda_basic_execution
