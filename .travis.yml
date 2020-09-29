@@ -4,7 +4,7 @@ node_js:
 services: mongodb
 deploy:
   provider: lambda
-  function_name: lambda test
+  function_name: "lambda-test"
   region: ap-southeast-1
   role: arn:aws:iam::0123456789012:role/lambda_basic_execution
   runtime: nodejs12.0
