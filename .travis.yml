@@ -33,13 +33,13 @@ before_deploy:
   - openssl aes-256-cbc -K $encrypted_f8ef6066f5ff_key -iv $encrypted_f8ef6066f5ff_iv -in gcloud-service-key.json.enc -out gcloud-service-key.json -d
   - gcloud auth activate-service-account --key-file gcloud-service-key.json
 
-  - gcloud config set project cs3219-pokedex/github_lyskevin_pokedex/master//
+  - gcloud config set project cs3219-pokedex
 
 deploy:
   - provider: script
     script:
       # change PROJECT and REPO to the values from the cloud console: https://console.cloud.google.com/code/develop
-      - gcloud --quiet beta functions deploy mailer --source-url https://source.developers.google.com/p/cs3219-pokedex/github_lyskevin_pokedex/master///r/https://source.cloud.google.com/cs3219-pokedex/github_lyskevin_pokedex/+/master:;drc=25e7c4caaa3a4471c0a8f1282c8e3b6716ab74d3 --source-path / --trigger-http
+      - gcloud --quiet beta functions deploy mailer --source-url cs3219-pokedex/r/github_lyskevin_pokedex --source-path / --trigger-http
     skip_cleanup: true
     on:
       branch: master
