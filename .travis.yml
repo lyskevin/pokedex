@@ -6,6 +6,7 @@ deploy:
   provider: lambda
   function_name: "lambda-test"
   region: "ap-southeast-1"
+  role: "arn:aws:iam::012345678901:role/lambda_basic_execution"
   runtime: "nodejs12.0"
   handler_name: "handler"
   secret_access_key:
