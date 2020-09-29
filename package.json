@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --require babel-register tests/*.js --exit",
-    "dev": "nodemon --exec babel-node --presets babel-preset-env ./server.js"
+    "start": "nodemon --exec babel-node --presets babel-preset-env ./server.js"
   },
   "keywords": [
     "api",
@@ -16,7 +16,6 @@
   "author": "Lim Yong Shen, Kevin",
   "license": "ISC",
   "dependencies": {
-    "babel": "^6.23.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
@@ -28,5 +27,8 @@
     "mongo-mock": "^4.0.0",
     "mongoose": "^5.10.3",
     "nodemon": "^2.0.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
   }
 }
