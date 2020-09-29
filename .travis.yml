@@ -4,7 +4,9 @@ node_js:
 services: mongodb
 deploy:
   provider: lambda
+  function_name: "lambda-test"
   region: "ap-southeast-1"
+  role: "arn:aws:iam::256493849411:role/Administrator"
   runtime: "nodejs12.0"
   handler_name: "handler"
   secret_access_key:
