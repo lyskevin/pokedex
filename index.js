@@ -51,5 +51,5 @@ app.listen(port, function() {
 });
 
 module.exports = app;
-exports.handler = app;
+module.exports.handler = app;
 
