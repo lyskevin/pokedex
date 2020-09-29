@@ -51,4 +51,5 @@ app.listen(port, function() {
 });
 
 module.exports = app;
+exports.my_function = app;
 
