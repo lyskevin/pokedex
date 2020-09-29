@@ -39,7 +39,7 @@ deploy:
   - provider: script
     script:
       # change PROJECT and REPO to the values from the cloud console: https://console.cloud.google.com/code/develop
-      - gcloud --quiet beta functions deploy mailer --source https://source.developers.google.com/projects/cs3219-pokedex/repos/github_lyskevin_pokedex/moveable-aliases/master/paths// --runtime nodejs12 --trigger-http
+      - gcloud functions deploy my_function --source https://source.developers.google.com/projects/cs3219-pokedex/repos/github_lyskevin_pokedex/moveable-aliases/master/paths// --runtime nodejs12 --trigger-http
     skip_cleanup: true
     on:
       branch: master
