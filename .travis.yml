@@ -1,15 +1,47 @@
+# Source: https://www.drzon.net/posts/automatic-deployments-to-google-cloud-functions-with-travis-ci/
+
+# Use Dockerized infrastructure
+sudo: false
+
+# Use node_js environnement
 language: node_js
 node_js:
-- node
-services: mongodb
+  - "12"
+
+# Cache Gcloud SDK between commands
+cache:
+  yarn: true
+  directories:
+  - "$HOME/google-cloud-sdk/"
+
+env:
+  global:
+
+
+install:
+  - npm install
+
+script:
+  - npm test
+
+before_deploy:
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud --quiet version
+  - gcloud --quiet components update
+
+  # use the decrypted service account credentials to authenticate the command line tool
+  # get the encrypted variable names from travis cli: https://docs.travis-ci.com/user/encrypting-files/
+  - openssl aes-256-cbc -K $encrypted_f8ef6066f5ff_key -iv $encrypted_f8ef6066f5ff_iv -in gcloud-service-key.json.enc -out gcloud-service-key.json -d
+  - gcloud auth activate-service-account --key-file gcloud-service-key.json
+
+  - gcloud config set project cs3219-pokedex/github_lyskevin_pokedex/master//
+
 deploy:
-  provider: lambda
-  function_name: "lambda-test"
-  region: "ap-southeast-1"
-  role: "arn:aws:iam::256493849411:role/Administrator"
-  runtime: "nodejs12.x"
-  handler_name: "handler"
-  secret_access_key:
-    secure: vpe6yIZOkQ58ScfOCHGKzUbVaXT7JRXuDhssuldUUPkPsbpK/cRUbIa+UMnoq9dA4hhX1DerYHjU0CI4KeM4abFjDCSezV0KzBkXC3VkqQ6Bit845gPwm3yvMaT/1pGSWcfK4wfyBMOjob4Ml7WFDoRI3pJz+Oo3gRAnjdilmFWU/zQEnHdmJJS/sO7HQwcJVzEl5TtE2bH4ga39sMLhJhBeJQOjntPYCX4cJHYkDblp78T+wV0uiCMLafSTmW4GkMFWo4lxhgn1VOLgxZDl6+85zcBMb6qZLligFaO+dJA1EHklgukXDmrFaKGdTe46ofCBnFK2E0hqKs1VWfXJ1M13gX5GXZuJXHIAiEbWtIj4cd/r8pNHQOrHecsbehwmsb7LrFo+TOWBjf/r9mZ4TrLYTEN/YbPw2w4SdsUtaozbRi098bNSZPkSh0oPaTKsAQ41GmDUkxGqr+0wbO0Hk5H62dRyhAjABPqVFx/aokEOSt087XEwagvqa/T1AVIFRaJ5chD1oJQ/lkX0oq1QK6wcZ21NX7dck6P7oPOb/yxBMf/mldQm/8WHiq13bwFLJ4p1fvLh8TGh3OE0vtykkxFnkpgFPx8U9Brh2J82ct80ggqYjU19KhZ5MKabJ6TbINWxykeono1xe96dD6csVcfTRpAfyE8Xu0i7SesF5Yc=
-  access_key_id:
-    secure: 0yPiCJ9Aq02mpB9CgLjQVzBJZU5Y71tfGOBAsn0Q6uhAXrhdt6KX7gkQgSjxBXypAhN8uabOaxF5k4KJp7j4BBwouagM5muz/hyqN6R6uTsyaaYA+M17/OHjQ6FqYzPX6dUWVEUNN5PQ24dJDIpZBMxAzEHFVU4Z/TfeDwCIK19fv1zjs4E5L+N/ATVJZKULNV3p2Hox0QDzdLC1qJt4Fy0+uh/DwAC262pSG7o6ogv62pwnbM3tP6Cc1IhkBGl5MQdADLansRwFi3Nx5uGtB2YX7JAF1+YRamaMsKDzJLdoURot7QNtgzuAMNWcGYpxniVaenZBZZ0Mu3Yx2TwKU2vUQXXZPkPjsSFjStP/IZ5vmBkiPDXYavWQY/JYNtc8mIFOBzB8Y8O2V/kgW9FCY4Uv+oA+acSUDzcdsi+FZ9qrLGHWrVWvlOfQY/4Zkawav0cN8mjtECH6DpwibZ0ioYvWHKAiC7VD1phZjYUk37aVpAmYkNwT/9otniOfT4w9BNBswSRnhlHA5pmIS4gPa1Pmxgak7daxsdFnW7407R62YBIBJ2bpbdpg60LU4K4hqQWHh59XtaU7qglY1RlUg1HT23hGR7+E4uMD88EH/06twAulAlcdusj2AltYF2TVFpsYNm1gxqf0MR3RE6sUA42VJ1YqEXxLPkFVFLOAI/Y=/
+  - provider: script
+    script:
+      # change PROJECT and REPO to the values from the cloud console: https://console.cloud.google.com/code/develop
+      - gcloud --quiet beta functions deploy mailer --source-url https://source.developers.google.com/p/cs3219-pokedex/github_lyskevin_pokedex/master///r/https://source.cloud.google.com/cs3219-pokedex/github_lyskevin_pokedex/+/master:;drc=25e7c4caaa3a4471c0a8f1282c8e3b6716ab74d3 --source-path / --trigger-http
+    skip_cleanup: true
+    on:
+      branch: master
