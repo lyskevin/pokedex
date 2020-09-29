@@ -8,6 +8,9 @@ language: node_js
 node_js:
   - "12"
 
+# Set up MongoDB
+services: mongodb
+
 # Cache Gcloud SDK between commands
 cache:
   yarn: true
