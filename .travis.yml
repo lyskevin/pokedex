@@ -7,7 +7,7 @@ deploy:
   function_name: "lambda-test"
   region: "ap-southeast-1"
   role: "arn:aws:iam::256493849411:role/Administrator"
-  runtime: "nodejs12.0"
+  runtime: "nodejs12.x"
   handler_name: "handler"
   secret_access_key:
     secure: vpe6yIZOkQ58ScfOCHGKzUbVaXT7JRXuDhssuldUUPkPsbpK/cRUbIa+UMnoq9dA4hhX1DerYHjU0CI4KeM4abFjDCSezV0KzBkXC3VkqQ6Bit845gPwm3yvMaT/1pGSWcfK4wfyBMOjob4Ml7WFDoRI3pJz+Oo3gRAnjdilmFWU/zQEnHdmJJS/sO7HQwcJVzEl5TtE2bH4ga39sMLhJhBeJQOjntPYCX4cJHYkDblp78T+wV0uiCMLafSTmW4GkMFWo4lxhgn1VOLgxZDl6+85zcBMb6qZLligFaO+dJA1EHklgukXDmrFaKGdTe46ofCBnFK2E0hqKs1VWfXJ1M13gX5GXZuJXHIAiEbWtIj4cd/r8pNHQOrHecsbehwmsb7LrFo+TOWBjf/r9mZ4TrLYTEN/YbPw2w4SdsUtaozbRi098bNSZPkSh0oPaTKsAQ41GmDUkxGqr+0wbO0Hk5H62dRyhAjABPqVFx/aokEOSt087XEwagvqa/T1AVIFRaJ5chD1oJQ/lkX0oq1QK6wcZ21NX7dck6P7oPOb/yxBMf/mldQm/8WHiq13bwFLJ4p1fvLh8TGh3OE0vtykkxFnkpgFPx8U9Brh2J82ct80ggqYjU19KhZ5MKabJ6TbINWxykeono1xe96dD6csVcfTRpAfyE8Xu0i7SesF5Yc=
