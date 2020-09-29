@@ -50,5 +50,6 @@ app.listen(port, function() {
   console.log("Running Pokedex on port " + port);
 });
 
-// Export app for testing purposes
 module.exports = app;
+exports.handler = app;
+
