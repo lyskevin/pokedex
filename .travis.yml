@@ -28,7 +28,6 @@ script:
   - npm test
 
 before_deploy:
-  - source /home/travis/google-cloud-sdk/path.bash.inc
   - gcloud --quiet version
   - gcloud --quiet components update
 
