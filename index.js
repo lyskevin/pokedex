@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost/pokedex', {
+mongoose.connect('mongodb://0.0.0.0/pokedex', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -22,7 +22,7 @@ if (db) {
   console.log("Error connecting DB");
 }
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT;
 
 app.get('/', (request, response) => response.send('Welcome to my Pokedex'));
 app.use('/api', apiRoutes);
