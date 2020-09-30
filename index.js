@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.URI, {
+mongoose.connect(URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
