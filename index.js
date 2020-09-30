@@ -2,6 +2,7 @@ let bodyParser = require('body-parser');
 let express = require('express');
 let mongoose = require('mongoose');
 let apiRoutes = require('./api-routes.js');
+const defaultPort = 4321;
 
 let app = express();
 
@@ -22,7 +23,7 @@ if (db) {
   console.log("Error connecting DB");
 }
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || defaultPort;
 
 app.get('/', (request, response) => response.send('Welcome to my Pokedex'));
 app.use('/api', apiRoutes);
