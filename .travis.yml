@@ -1,45 +1,29 @@
-# Source: https://www.drzon.net/posts/automatic-deployments-to-google-cloud-functions-with-travis-ci/
-
-# Use Dockerized infrastructure
 sudo: false
-
-# Use node_js environnement
 language: node_js
 node_js:
-  - "12"
-
-# Set up MongoDB
+- '12'
 services: mongodb
-
-# Cache Gcloud SDK between commands
 cache:
   yarn: true
   directories:
   - "$HOME/google-cloud-sdk/"
-
 env:
   global:
-
-
+    secure: gSDCvJcncJJ646s/EZidq7SgGvW6eKS7dVCh1Gkios3Blew5sdEX+S9KxV8fKJQkpdGKT+gKSJ36ZA/s5XCRmGlLDtIbvffO0BzhPR1PskDmu+z5BaFxVJ5WSJYH2m5WdcxTeKDg4S+6w1bZdgfNq/ksYW93EAhB/yB3oYjY0/L1cmFFoGJsM0AvtAfhk/VWN2+voA4WiAuO7QFRrE6alp5gzGgCC/kzSeb87Im1uGHNuLHs0iokOg9OUsN32JXum6sbajhjL8hWrANvuEqIc8/9cZIY5eA3y12cvLDgVtQlQczRZT5vrf7XbRGGJMlVLsVGNt8nHk8zsFLxphddutql8n7VYS33EJCYXhe66QcBKIP83pvFZJTnRslyHNMwmB6E8KO93v7bva7a8UvgE6TCL+MfGbBIgEbnanItriCHnNBM80rBCTQkCYF+oNioWF7rk//gvDyzpwpLYY1cQyBDB7slHSvfVAMSBCOnbGVsnj5aCZIGYHsc6ASAkS6pJIrobKvVCj0J/++eQL2nhYKWu5cA2pKrmIWQxWG4hgh7ECXzIjPq06utryhI6S7r6ZyK0m7DO1pA1w2dTKu/9iWwkdfgLgbmi9y3C7GgdMC+/yKgnxEjj32sBnbjDL2VmUrBpPZ7oJ2F72ZF4/KGmJNZ/woBZHy3Bjrie23oZwA=
 install:
-  - npm install
-
+- npm install
 script:
-  - npm test
-
+- npm test
 before_deploy:
-  # use the decrypted service account credentials to authenticate the command line tool
-  # get the encrypted variable names from travis cli: https://docs.travis-ci.com/user/encrypting-files/
-  - openssl aes-256-cbc -K $encrypted_f8ef6066f5ff_key -iv $encrypted_f8ef6066f5ff_iv -in gcloud-service-key.json.enc -out gcloud-service-key.json -d
-  - gcloud auth activate-service-account --key-file gcloud-service-key.json
-
-  - gcloud config set project cs3219-pokedex
-
+- openssl aes-256-cbc -K $encrypted_f8ef6066f5ff_key -iv $encrypted_f8ef6066f5ff_iv
+  -in gcloud-service-key.json.enc -out gcloud-service-key.json -d
+- gcloud auth activate-service-account --key-file gcloud-service-key.json
+- gcloud config set project cs3219-pokedex
 deploy:
-  - provider: script
-    script:
-      # change PROJECT and REPO to the values from the cloud console: https://console.cloud.google.com/code/develop
-      - gcloud beta functions deploy pokedex --source https://source.developers.google.com/projects/cs3219-pokedex/repos/github_lyskevin_pokedex/moveable-aliases/master/paths// --runtime nodejs12 --trigger-http --entry-point app --region asia-east2
-    skip_cleanup: true
-    on:
-      branch: master
+- provider: script
+  script:
+  - gcloud beta functions deploy pokedex --source https://source.developers.google.com/projects/cs3219-pokedex/repos/github_lyskevin_pokedex/moveable-aliases/master/paths//
+    --runtime nodejs12 --trigger-http --entry-point app --region asia-east2
+  skip_cleanup: true
+  on:
+    branch: master
