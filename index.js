@@ -2,6 +2,8 @@ let bodyParser = require('body-parser');
 let express = require('express');
 let mongoose = require('mongoose');
 let apiRoutes = require('./api-routes.js');
+require('dotenv').config();
+const uri = 'mongodb+srv://kevin:g4fGJnxTUqQhRLp5@cluster0.sbpt3.gcp.mongodb.net/pokemon?retryWrites=true&w=majority';
 
 let app = express();
 
@@ -10,7 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://0.0.0.0/pokedex', {
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
