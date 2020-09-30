@@ -22,7 +22,7 @@ if (db) {
   console.log("Error connecting DB");
 }
 
-var port = process.env.PORT;
+var port = process.env.PORT || 8080;
 
 app.get('/', (request, response) => response.send('Welcome to my Pokedex'));
 app.use('/api', apiRoutes);
@@ -31,12 +31,6 @@ app.listen(port, function() {
   console.log("Running Pokedex on port " + port);
 });
 
-// For testing
-module.exports = app;
-
-// For deployment
-module.exports.pokedex = function() {
-  app.listen(port, function() {
-    console.log("Running Pokedex on port " + port);
-  });
+module.exports = {
+  app
 };
