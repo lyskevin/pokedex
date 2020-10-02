@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/lyskevin/pokedex.svg?branch=master)](https://travis-ci.org/lyskevin/pokedex)
+[![Build Status](https://travis-ci.com/lyskevin/pokedex.svg?branch=master)](https://travis-ci.com/lyskevin/pokedex)
 
 A Pokedex webapp which makes use of simple RESTful APIs, as part of my assignment for CS3219. (Work in Progress)
 
