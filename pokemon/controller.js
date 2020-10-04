@@ -92,7 +92,7 @@ exports.update = function (request, response) {
 // DELETE /api/pokemon/{name}
 exports.delete = function (request, response) {
   Pokemon.deleteOne({
-    name: request.body.name
+    name: request.params.name
   }, function (error) {
     if (error) {
       response.send(error);
