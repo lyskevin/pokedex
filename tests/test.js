@@ -2,7 +2,6 @@
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var app = require('../index').app;
-const { expect } = require('chai');
 
 // Configure chai (Use the 'Should' style)
 chai.use(chaiHttp);
