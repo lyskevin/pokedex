@@ -5,6 +5,7 @@ let apiRoutes = require('./api-routes.js');
 require('dotenv').config();
 const uri = 'mongodb+srv://kevin:' + process.env.PASSWORD
   + '@cluster0.sbpt3.gcp.mongodb.net/pokemon?retryWrites=true&w=majority';
+let cors = require('cors');
 
 let app = express();
 
@@ -12,6 +13,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
+app.use(cors);
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
